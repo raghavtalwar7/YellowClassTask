@@ -1,6 +1,6 @@
-# movielist_app
+# Yellow Class Task
 
-A new Flutter application.
+Movie List Flutter application.
 
 ## Getting Started
 
