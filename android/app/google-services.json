@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24042499647",
+    "project_id": "movielist-fe71b",
+    "storage_bucket": "movielist-fe71b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24042499647:android:cf05b76f61f97aa067128a",
+        "android_client_info": {
+          "package_name": "com.raghav.movielist_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24042499647-d2argajikv146s3sgnjku72j05va8rfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmHYWzqswMCZYe6oHh0rfQWPhAoeQoLZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24042499647-d2argajikv146s3sgnjku72j05va8rfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
