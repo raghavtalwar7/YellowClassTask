@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movielist_app/authentication.dart';
 import 'package:movielist_app/myhomepage.dart';
 import 'package:provider/provider.dart';
-import 'package:movielist_app/models/helper.dart';
 
 class Signup extends StatelessWidget {
   @override
@@ -12,15 +11,6 @@ class Signup extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         children: <Widget>[
           SizedBox(height: 80),
-          // logo
-          Column(
-            children: [
-              FlutterLogo(
-                size: 55,
-              ),
-            ],
-          ),
-          SizedBox(height: 50),
           Text(
             'Welcome!',
             style: TextStyle(fontSize: 24),
@@ -141,9 +131,7 @@ class _SignupFormState extends State<SignupForm> {
                   });
                 },
                 child: Icon(
-                  _obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility_outlined,
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
                 ),
               ),
             ),

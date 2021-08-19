@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movielist_app/models/movie.dart';
 import 'package:movielist_app/Database/dbconn.dart';
 import 'package:movielist_app/models/constants.dart';
 import 'package:movielist_app/login.dart';
@@ -52,48 +51,50 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         elevation: 5,
         builder: (_) =>
-            Container(
-              padding: EdgeInsets.all(15),
-              width: double.infinity,
-              height: 300,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(hintText: 'Name'),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    controller: _directorController,
-                    decoration: InputDecoration(hintText: 'Director'),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // Save new journal
-                      if (id == null) {
-                        await _addItem();
-                      }
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                width: double.infinity,
+                height: 300,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextField(
+                      controller: _nameController,
+                      decoration: InputDecoration(hintText: 'Name'),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _directorController,
+                      decoration: InputDecoration(hintText: 'Director'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Save new journal
+                        if (id == null) {
+                          await _addItem();
+                        }
 
-                      if (id != null) {
-                        await _updateItem(id);
-                      }
+                        if (id != null) {
+                          await _updateItem(id);
+                        }
 
-                      // Clear the text fields
-                      _nameController.text = '';
-                      _directorController.text = '';
+                        // Clear the text fields
+                        _nameController.text = '';
+                        _directorController.text = '';
 
-                      // Close the bottom sheet
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(id == null ? 'Create New' : 'Update'),
-                  )
-                ],
+                        // Close the bottom sheet
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(id == null ? 'Create New' : 'Update'),
+                    )
+                  ],
+                ),
               ),
             ));
   }
@@ -125,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF819BFA),
         title: Text('Movie List'),
         actions: <Widget>[
           PopupMenuButton<String>(
@@ -172,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF819BFA),
         child: Icon(Icons.add),
         onPressed: () => _showForm(null),
       ),
