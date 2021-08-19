@@ -34,7 +34,6 @@ class Login extends StatelessWidget {
           ),
 
           SizedBox(height: 20),
-
           Row(
             children: <Widget>[
               SizedBox(width: 30),
