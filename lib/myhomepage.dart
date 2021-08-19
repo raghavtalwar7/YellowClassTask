@@ -4,6 +4,7 @@ import 'package:movielist_app/models/constants.dart';
 import 'package:movielist_app/login.dart';
 import 'package:movielist_app/authentication.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/widgets.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
@@ -42,74 +43,95 @@ class _MyHomePageState extends State<MyHomePage> {
       // id == null -> create new item
       // id != null -> update an existing item
       final existingJournal =
-      _movielist.firstWhere((element) => element['id'] == id);
+          _movielist.firstWhere((element) => element['id'] == id);
       _nameController.text = existingJournal['name'];
       _directorController.text = existingJournal['director'];
     }
 
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         elevation: 5,
-        builder: (_) =>
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                width: double.infinity,
-                height: 300,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(hintText: 'Name'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller: _directorController,
-                      decoration: InputDecoration(hintText: 'Director'),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        // Save new journal
-                        if (id == null) {
-                          await _addItem();
-                        }
+        builder: (_) => Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+              width: double.infinity,
+              height: 200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    controller: _nameController,
+                    decoration: InputDecoration(hintText: 'Name'),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: _directorController,
+                    decoration: InputDecoration(hintText: 'Director'),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      // Save new journal
+                      if (id == null) {
+                        await _addItem();
+                      }
 
-                        if (id != null) {
-                          await _updateItem(id);
-                        }
+                      if (id != null) {
+                        await _updateItem(id);
+                      }
 
-                        // Clear the text fields
-                        _nameController.text = '';
-                        _directorController.text = '';
+                      // Clear the text fields
+                      _nameController.text = '';
+                      _directorController.text = '';
 
-                        // Close the bottom sheet
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(id == null ? 'Create New' : 'Update'),
-                    )
-                  ],
-                ),
+                      // Close the bottom sheet
+                      Navigator.of(context).pop();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF5D79DE)),
+                    ),
+                    child: Text(id == null ? 'Create New' : 'Update'),
+                  )
+                ],
               ),
             ));
   }
 
 // Insert a new journal to the database
   Future<void> _addItem() async {
-    await DbConn.createItem(
-        _nameController.text, _directorController.text);
+    if (_nameController.text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Name field is empty!'),
+      ));
+    } else if (_directorController.text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Director field is empty!'),
+      ));
+    } else {
+      await DbConn.createItem(_nameController.text, _directorController.text);
+    }
     _refreshmovielist();
   }
 
   // Update an existing journal
   Future<void> _updateItem(int id) async {
-    await DbConn.updateItem(
-        id, _nameController.text, _directorController.text);
+    if (_nameController.text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Name field is empty!'),
+      ));
+    } else if (_directorController.text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Director field is empty!'),
+      ));
+    } else {
+      await DbConn.updateItem(
+          id, _nameController.text, _directorController.text);
+    }
     _refreshmovielist();
   }
 
@@ -144,35 +166,34 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _isLoading
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : ListView.builder(
-        itemCount: _movielist.length,
-        itemBuilder: (context, index) =>
-            Card(
-              color: Colors.orange[200],
-              margin: EdgeInsets.all(15),
-              child: ListTile(
-                  title: Text(_movielist[index]['name']),
-                  subtitle: Text(_movielist[index]['director']),
-                  trailing: SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () => _showForm(_movielist[index]['id']),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () =>
-                              _deleteItem(_movielist[index]['id']),
-                        ),
-                      ],
-                    ),
-                  )),
+              itemCount: _movielist.length,
+              itemBuilder: (context, index) => Card(
+                color: Colors.orange[200],
+                margin: EdgeInsets.all(15),
+                child: ListTile(
+                    title: Text(_movielist[index]['name']),
+                    subtitle: Text(_movielist[index]['director']),
+                    trailing: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () => _showForm(_movielist[index]['id']),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () =>
+                                _deleteItem(_movielist[index]['id']),
+                          ),
+                        ],
+                      ),
+                    )),
+              ),
             ),
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF819BFA),
         child: Icon(Icons.add),
@@ -180,14 +201,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
   void choiceAction(String choice) {
     if (choice == Constants.Profile) {
       print('My Profile');
     } else if (choice == Constants.SignOut) {
-      context.read<AuthenticationHelper>().signOut().then((_) =>  Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (contex) => Login()),
-      ));
+      context
+          .read<AuthenticationHelper>()
+          .signOut()
+          .then((_) => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (contex) => Login()),
+              ));
     }
   }
 }

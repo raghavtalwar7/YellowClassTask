@@ -47,7 +47,7 @@ class Login extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Signup()));
                 },
                 child: Text('Get Registered Now!!',
-                    style: TextStyle(fontSize: 20, color: Colors.blue)),
+                    style: TextStyle(fontSize: 20, color: const Color(0xFF5D79DE))),
               )
             ],
           ),
@@ -102,10 +102,12 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.email_outlined),
               labelText: 'Email',
-              border: OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   const Radius.circular(100.0),
                 ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
               ),
             ),
             validator: (value) {
@@ -128,10 +130,12 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               labelText: 'Password',
               prefixIcon: Icon(Icons.lock_outline),
-              border: OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   const Radius.circular(100.0),
                 ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
               ),
               suffixIcon: GestureDetector(
                 onTap: () {
@@ -159,8 +163,8 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 30),
 
           SizedBox(
-            height: 54,
-            width: 184,
+            height: 52,
+            width: 154,
             child: RaisedButton(
               onPressed: () {
                 // Respond to button press
@@ -190,7 +194,7 @@ class _LoginFormState extends State<LoginForm> {
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24.0))),
-              color: Colors.blue[400],
+              color: const Color(0xFF5D79DE),
               textColor: Colors.white,
               child: Text(
                 'Login',

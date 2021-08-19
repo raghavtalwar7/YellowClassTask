@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
         child: Stack(
             children:[
               Center(
-                  child: Text("Movie List App",style: TextStyle(color:Theme.of(context).primaryColor ,fontSize: 24,fontWeight: FontWeight.w700),)),
+                  child: Text("Movie List App",style: TextStyle(color: const Color(0xFF819BFA) ,fontSize: 24,fontWeight: FontWeight.w700),)),
             ]
         ),
       ),

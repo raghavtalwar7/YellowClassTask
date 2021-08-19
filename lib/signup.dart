@@ -15,12 +15,12 @@ class Signup extends StatelessWidget {
             'Welcome!',
             style: TextStyle(fontSize: 24),
           ),
-
+          SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SignupForm(),
           ),
-
+          SizedBox(height: 30),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -35,7 +35,8 @@ class Signup extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Text(' Get Logged in Now!',
-                          style: TextStyle(fontSize: 20, color: Colors.blue)),
+                          style: TextStyle(
+                              fontSize: 20, color: const Color(0xFF819BFA))),
                     )
                   ],
                 )
@@ -43,22 +44,6 @@ class Signup extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Container buildLogo() {
-    return Container(
-      height: 80,
-      width: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.blue),
-      child: Center(
-        child: Text(
-          "T",
-          style: TextStyle(color: Colors.white, fontSize: 60.0),
-        ),
       ),
     );
   }
@@ -77,7 +62,6 @@ class _SignupFormState extends State<SignupForm> {
   String email;
   String password;
   String name;
-  bool _obscureText = true;
 
   bool agree = false;
 
@@ -85,11 +69,6 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        const Radius.circular(100.0),
-      ),
-    );
 
     var space = SizedBox(height: 10);
     return Form(
@@ -100,12 +79,19 @@ class _SignupFormState extends State<SignupForm> {
           // email
           TextFormField(
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email_outlined),
-                labelText: 'Email',
-                border: border),
+              prefixIcon: Icon(Icons.email_outlined),
+              labelText: 'Email',
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  const Radius.circular(100.0),
+                ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
+              ),
+            ),
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter email';
               }
               return null;
             },
@@ -123,16 +109,12 @@ class _SignupFormState extends State<SignupForm> {
             decoration: InputDecoration(
               labelText: 'Password',
               prefixIcon: Icon(Icons.lock_outline),
-              border: border,
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-                child: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  const Radius.circular(100.0),
                 ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
               ),
             ),
             onSaved: (val) {
@@ -141,7 +123,7 @@ class _SignupFormState extends State<SignupForm> {
             obscureText: true,
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter password';
               }
               return null;
             },
@@ -152,12 +134,18 @@ class _SignupFormState extends State<SignupForm> {
             decoration: InputDecoration(
               labelText: 'Confirm Password',
               prefixIcon: Icon(Icons.lock_outline),
-              border: border,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  const Radius.circular(100.0),
+                ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
+              ),
             ),
             obscureText: true,
             validator: (value) {
               if (value != pass.text) {
-                return 'password not match';
+                return 'password does not match';
               }
               return null;
             },
@@ -168,7 +156,13 @@ class _SignupFormState extends State<SignupForm> {
             decoration: InputDecoration(
               labelText: 'Full name',
               prefixIcon: Icon(Icons.account_circle),
-              border: border,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  const Radius.circular(100.0),
+                ),
+                borderSide:
+                    BorderSide(color: const Color(0xFF5D79DE), width: 2.5),
+              ),
             ),
             onSaved: (val) {
               name = val;
@@ -180,7 +174,7 @@ class _SignupFormState extends State<SignupForm> {
               return null;
             },
           ),
-
+          SizedBox(height: 30),
           Row(
             children: <Widget>[
               Checkbox(
@@ -197,7 +191,7 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ],
           ),
-
+          SizedBox(height: 30),
           // signUP button
           RaisedButton(
             onPressed: () async {
@@ -224,7 +218,7 @@ class _SignupFormState extends State<SignupForm> {
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            color: Colors.blue[400],
+            color: const Color(0xFF5D79DE),
             textColor: Colors.white,
             child: Text('Sign Up'),
           ),
